@@ -22,7 +22,7 @@
       overflow: hidden;
     }
     h1 { margin-bottom: 5px; font-size: 24px; color: #ffcc00; }
-    .score-container { font-size: 36px; font-weight: bold; margin-bottom: 20px; }
+    .score-container { font-size: 36px; font-weight: bold; margin-bottom: 15px; }
     .click-area { position: relative; display: inline-block; cursor: pointer; }
     .click-img {
       width: 200px;
@@ -31,6 +31,7 @@
       border: 4px solid #ffcc00;
       transition: transform 0.05s ease;
       box-shadow: 0 0 25px rgba(255, 204, 0, 0.4);
+      object-fit: cover;
     }
     .click-img:active { transform: scale(0.92); }
     .floating-text {
@@ -53,13 +54,15 @@
   <div class="score-container">💰 <span id="score">0</span></div>
 
   <div class="click-area" id="tapArea">
-    <img src="https://i.ibb.co/3sS7v7L/mell.jpg" alt="Mellstroy" class="click-img" id="mellImg">
+    <img src="https://images.wallpapersden.com/image/download/mellstroy_bWdpbm2UmZqaraWkpJRmZ2VlrWdnZQ.jpg" alt="Mellstroy" class="click-img" id="mellImg">
   </div>
 
   <script>
-    let score = 0;
+    let score = localStorage.getItem('mell_score') ? parseInt(localStorage.getItem('mell_score')) : 0;
     const scoreElement = document.getElementById('score');
     const tapArea = document.getElementById('tapArea');
+
+    scoreElement.innerText = score;
 
     if (window.Telegram && window.Telegram.WebApp) {
       window.Telegram.WebApp.ready();
@@ -69,6 +72,7 @@
     tapArea.addEventListener('click', (e) => {
       score++;
       scoreElement.innerText = score;
+      localStorage.setItem('mell_score', score);
 
       const floatText = document.createElement('div');
       floatText.className = 'floating-text';
